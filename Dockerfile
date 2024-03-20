@@ -6,10 +6,10 @@ FROM openjdk:17-jdk-slim AS build
 COPY . .
 
 # Set the working directory
-WORKDIR /Vendor/build/classes/java/main/com/SXN/Vendor/gradle/src
+WORKDIR  /home/gradle/src/
 
 # Run the Gradle build
-RUN Vendor/build/classes/java/main/com/SXN/Vendor/gradle build --no-daemon
+RUN gradle build --no-daemon
 
 # Use JDK 17 slim image for the runtime environment
 FROM openjdk:17.0.1-jdk-slim
@@ -21,7 +21,7 @@ EXPOSE 8082
 RUN mkdir /app
 
 # Copy the built JAR from the build stage to the runtime stage
-COPY --from=build /Vendor/build/classes/java/main/com/SXN/Vendor/gradle/src/build/libs/Vendor.0.0.1-SNAPSHOT.jar /app/spring-boot-application.jar
+COPY --from=build /gradle/src/build/libs/Vendor.0.0.1-SNAPSHOT.jar /app/spring-boot-application.jar
 
 # Set the entry point to run the Spring Boot application
 ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app/spring-boot-application.jar"]
