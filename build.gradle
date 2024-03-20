@@ -1,0 +1,49 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.3'
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.SXN'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+	targetCompatibility = '17'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+
+	implementation('org.springframework.boot:spring-boot-starter-web')
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+//	implementation 'org.projectlombok:lombok:1.18.28'
+	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
+
+
+	annotationProcessor 'org.projectlombok:lombok:1.18.28'
+	runtimeOnly 'com.h2database:h2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// Firebase Admin SDK for integrating with Firebase Realtime Database
+	implementation group: 'com.google.firebase', name: 'firebase-admin', version: '8.1.0'
+
+	// Google OAuth Client Library for verifying Firebase ID Tokens
+	implementation group: 'com.google.api-client', name: 'google-api-client', version: '2.2.0'
+
+
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '3.2.2'
+	implementation 'com.google.cloud:google-cloud-firestore'
+	implementation 'com.google.auth:google-auth-library-oauth2-http'
+
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
