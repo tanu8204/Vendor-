@@ -1,11 +1,14 @@
 # Use JDK 17 slim image for the build stage
 FROM openjdk:17-jdk-slim AS build
 
+# Copy the project files to the container
+COPY . /app
+
 # Set the working directory
 WORKDIR /app
 
-# Copy the project files to the container
-COPY . .
+# Make the gradlew script executable
+RUN chmod +x gradlew
 
 # Run the Gradle build
 RUN ./gradlew build
