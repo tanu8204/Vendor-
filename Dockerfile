@@ -9,7 +9,7 @@ COPY . .
 WORKDIR  /home/gradle/src/
 
 # Run the Gradle build
-RUN ./gradle build --no-daemon
+RUN ./gradlew build --no-daemon
 
 # Use JDK 17 slim image for the runtime environment
 FROM openjdk:17.0.1-jdk-slim
