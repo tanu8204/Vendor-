@@ -1,15 +1,14 @@
-# Use JDK 17 instead of JDK 8
+# Use JDK 17 slim image for the build stage
 FROM openjdk:17-jdk-slim AS build
 
-
 # Copy the project files to the container
-COPY . .
+COPY . /app
 
 # Set the working directory
-# WORKDIR  /home/gradle/src/
+WORKDIR /app
 
 # Run the Gradle build
-RUN gradle build
+RUN ./gradlew build
 
 # Use JDK 17 slim image for the runtime environment
 FROM openjdk:17.0.1-jdk-slim
@@ -21,9 +20,7 @@ EXPOSE 8082
 RUN mkdir /app
 
 # Copy the built JAR from the build stage to the runtime stage
-COPY --from=build /gradle/src/build/libs/Vendor.0.0.1-SNAPSHOT.jar /app/spring-boot-application.jar
+COPY --from=build /app/build/libs/Vendor.0.0.1-SNAPSHOT.jar /app/spring-boot-application.jar
 
 # Set the entry point to run the Spring Boot application
-ENTRYPOINT ["java","-jar", "/app/spring-boot-application.jar"]
-
-CMD ["/bin/bash"]
+ENTRYPOINT ["java", "-jar", "/app/spring-boot-application.jar"]
