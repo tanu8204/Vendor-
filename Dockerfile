@@ -6,10 +6,10 @@ FROM openjdk:17-jdk-slim AS build
 COPY . .
 
 # Set the working directory
-WORKDIR  /home/gradle/src/
+# WORKDIR  /home/gradle/src/
 
 # Run the Gradle build
-RUN ./gradlew build --no-daemon
+RUN ./gradlew build
 
 # Use JDK 17 slim image for the runtime environment
 FROM openjdk:17.0.1-jdk-slim
