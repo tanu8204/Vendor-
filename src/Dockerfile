@@ -24,6 +24,6 @@ RUN mkdir /app
 COPY --from=build /gradle/src/build/libs/Vendor.0.0.1-SNAPSHOT.jar /app/spring-boot-application.jar
 
 # Set the entry point to run the Spring Boot application
-ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app/spring-boot-application.jar"]
+ENTRYPOINT ["java","-jar", "/app/spring-boot-application.jar"]
 
 CMD ["/bin/bash"]
