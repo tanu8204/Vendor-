@@ -22,7 +22,7 @@ jobs:
         run: ./gradlew build --no-daemon
 
       - name: Deploy to Render
-        uses: renderapp/render-action@v1
+        uses: tanu8204/Vendor-
         with:
           renderToken: ${{ secrets.RENDER_TOKEN }}
           args: --branch=main --build-only
