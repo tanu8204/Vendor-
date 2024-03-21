@@ -18,5 +18,10 @@ public class ServiceConfiguration {
         return new VendorIdDetails();
     }
 
+    @Bean
+    public VendorNames vendorNames(){
+        return new VendorNames();
+    }
+    
 
 }
