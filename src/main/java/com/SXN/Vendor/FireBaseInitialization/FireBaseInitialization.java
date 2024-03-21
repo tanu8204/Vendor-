@@ -14,16 +14,32 @@ import java.io.IOException;
 public class FireBaseInitialization {
 
     @PostConstruct
-    public void initialization() throws IOException {
-        FileInputStream serviceAccount =
-                new FileInputStream("secrets.RENDER_TOKEN");
+    // public void initialization() throws IOException {
+    //     FileInputStream serviceAccount =
+    //             new FileInputStream("secrets.RENDER_TOKEN");
 
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .build();
+    //     FirebaseOptions options = new FirebaseOptions.Builder()
+    //             .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+    //             .build();
 
-        FirebaseApp.initializeApp(options);
-    }
+    //     FirebaseApp.initializeApp(options);
+    // }
+     try {
+            // Read service account key from environment variable
+            String renderToken = System.getenv("RENDER_TOKEN");
+
+            // Convert the service account key string to InputStream
+            ByteArrayInputStream serviceAccountStream = new ByteArrayInputStream(renderToken.getBytes(StandardCharsets.UTF_8));
+
+            // Initialize Firebase with the service account key
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccountStream))
+                    .build();
+
+            FirebaseApp.initializeApp(options);
+        } catch (IOException e) {
+            System.err.println("Error initializing Firebase: " + e.getMessage());
+        }
 
 
 }
