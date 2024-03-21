@@ -11,7 +11,7 @@ steps:
     stage: prepare
     type: git-clone
     repo: 'tanu8204/Vendor-'
-    revision: master
+    revision: main
     git: github
 
   MyUnitTests:
