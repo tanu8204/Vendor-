@@ -20,10 +20,8 @@ public class FireBaseInitialization {
 
             // Convert the service account key string to InputStream
             ByteArrayInputStream serviceAccountStream = new ByteArrayInputStream(renderToken.getBytes(StandardCharsets.UTF_8));
-
-            // Initialize Firebase with the service account key
             FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccountStream))
+                    .setCredentials(GoogleCredentials.fromStream(new ByteArrayInputStream(serviceAccountStream.getBytes(StandardCharsets.UTF_8))))
                     .build();
 
             FirebaseApp.initializeApp(options);
