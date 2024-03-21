@@ -29,7 +29,8 @@ public class FireBaseInitialization {
      //        System.err.println("Error initializing Firebase: " + e.getMessage());
      //    }
     @PostConstruct
-    FileInputStream serviceAccount =
+    public void initialization() {
+        FileInputStream serviceAccount =
                 null;
         try {
             serviceAccount = new FileInputStream("./serviceAccountKey.json");
@@ -40,8 +41,10 @@ public class FireBaseInitialization {
                 .build();
 
         FirebaseApp.initializeApp(options);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
 
 }
