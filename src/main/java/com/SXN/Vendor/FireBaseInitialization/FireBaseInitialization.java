@@ -40,7 +40,7 @@ public class FireBaseInitialization {
                 .build();
 
         FirebaseApp.initializeApp(options);
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
