@@ -14,16 +14,6 @@ import java.io.IOException;
 public class FireBaseInitialization {
 
     @PostConstruct
-    // public void initialization() throws IOException {
-    //     FileInputStream serviceAccount =
-    //             new FileInputStream("secrets.RENDER_TOKEN");
-
-    //     FirebaseOptions options = new FirebaseOptions.Builder()
-    //             .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-    //             .build();
-
-    //     FirebaseApp.initializeApp(options);
-    // }
      try {
             // Read service account key from environment variable
             String renderToken = System.getenv("RENDER_TOKEN");
