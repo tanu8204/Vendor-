@@ -18,7 +18,6 @@ public class FireBaseInitialization {
 
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setDatabaseUrl("https://duds-68a6d.firebaseio.com")
                     .build();
 
              FirebaseApp.initializeApp(options);
