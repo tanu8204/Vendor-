@@ -13,13 +13,25 @@ import java.io.IOException;
 public class FireBaseInitialization {
 
         @PostConstruct
-        public void initialization() throws IOException {
-            FileInputStream serviceAccount = new FileInputStream("./serviceAccountKey.json");
+        public void initialization() {
+            try {
+                FileInputStream serviceAccount = new FileInputStream("./serviceAccountKey.json");
 
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .build();
+                FirebaseOptions options = new FirebaseOptions.Builder()
+                        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                        .build();
 
-             FirebaseApp.initializeApp(options);
+                // Check if FirebaseApp with name "DEFAULT" exists
+                if (FirebaseApp.getApps().isEmpty()) {
+                    FirebaseApp.initializeApp(options);
+                } else {
+                    // If FirebaseApp already exists, re-initialize it with the new options
+                    FirebaseApp.getInstance().delete(); // Delete the existing app instance
+                    FirebaseApp.initializeApp(options); // Initialize with the new options
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
 }
