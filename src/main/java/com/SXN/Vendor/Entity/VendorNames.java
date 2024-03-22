@@ -1,19 +1,13 @@
 package com.SXN.Vendor.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import lombok.*;
-import org.springframework.data.annotation.Id;
-
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-
+import javax.persistence.Entity;
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class VendorNames {
         private String vendors="Vendors";
         private String vendorId;

@@ -1,11 +1,11 @@
 package com.SXN.Vendor.Entity;
 
-import jakarta.persistence.Entity;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import lombok.*;
 import org.springframework.data.annotation.Id;
-
+import javax.persistence.Entity;
 import java.util.UUID;
 
 
@@ -14,7 +14,7 @@ import java.util.UUID;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Entity
 public class Category1 {
 
     @Id //from data jpa dependency

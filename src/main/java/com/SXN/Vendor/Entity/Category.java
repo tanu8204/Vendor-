@@ -1,12 +1,10 @@
 package com.SXN.Vendor.Entity;
 
-import jakarta.persistence.Entity;
+import javax.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import lombok.*;
-import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.annotation.Id;
-
 import java.util.*;
 
 
@@ -15,7 +13,7 @@ import java.util.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Entity //from javax.persistence.Entity;
 public class Category {
 
     @Id //from data jpa dependency
