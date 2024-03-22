@@ -15,6 +15,7 @@ import java.util.UUID;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class VendorIdDetails {
 
         @Id //from data jpa dependency

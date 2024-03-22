@@ -15,6 +15,7 @@ import java.util.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class Category {
 
     @Id //from data jpa dependency

@@ -20,7 +20,7 @@ public class VendorController {
     @Autowired
     private VendorService vendorService;
 
-    @PostMapping
+    @PostMapping("registration")
     public ResponseEntity<ApiResponse<String>> registerVendor(@RequestBody VendorIdDetails vendor) {
         try {
             if (vendor.getVendorId() == null) {
@@ -36,7 +36,7 @@ public class VendorController {
         }
     }
 
-    @GetMapping("{vendorId}")
+    @GetMapping("LogIn/{vendorId}")
     public ResponseEntity<ApiResponse<String>> getVendorDetails(@PathVariable String vendorId) {
         try {
             VendorIdDetails getVendorDetails = vendorService.getVendorDetailsById(vendorId);

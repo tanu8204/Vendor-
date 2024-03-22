@@ -22,7 +22,7 @@ public class VendorNameController {
     @Autowired
     private VendorNameService vendorNameService;
 
-    @PostMapping
+    @PostMapping("addVendors")
     public ResponseEntity<ApiResponse<String>> saveVendor(@RequestBody VendorNames vendorNames) {
         try {
             String savedVendor = vendorNameService.saveVendorName(vendorNames);
@@ -34,7 +34,7 @@ public class VendorNameController {
 
 
 
-@GetMapping("{vendors}")
+@GetMapping("{vendors}/List")
 public ResponseEntity<ApiResponse<String>> getVendorNameDetails(@PathVariable String vendors) throws ExecutionException, InterruptedException {
     try {
         Map<String, Object> vendorDetails = vendorNameService.getVendorNameDetails(vendors);

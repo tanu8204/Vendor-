@@ -15,13 +15,13 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 @RestController
-@RequestMapping("/api/VendorList/Category/{vendorId}")
+@RequestMapping("/api/VendorList/{vendorId}")
 public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
 
-    @PostMapping
+    @PostMapping("/addCategoryDetails")
     public ResponseEntity<ApiResponse<String>> saveCategory(@PathVariable String vendorId,  @RequestBody Category category) {
         try {
             if (category.getItemId() == null) {
@@ -37,7 +37,7 @@ public class CategoryController {
         }
     }
 
-    @GetMapping("/{categoryName}/items/")
+    @GetMapping("/getCategoryDetails/{categoryName}/items/")
     public ResponseEntity<ApiResponse<String>> getItemDetails(@PathVariable String vendorId, @PathVariable String categoryName) throws ExecutionException, InterruptedException {
         try {
             List<Category> items = categoryService.getItemDetailsByVendorId(vendorId, categoryName);
