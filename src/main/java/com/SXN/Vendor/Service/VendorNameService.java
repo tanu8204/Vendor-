@@ -7,7 +7,11 @@ import java.util.concurrent.ExecutionException;
 
 public interface VendorNameService {
 
-    String saveVendorName(VendorNames vendorNames) throws ExecutionException, InterruptedException;
+//    String saveVendorName(VendorNames vendorNames) throws ExecutionException, InterruptedException;
 
-    Map<String, Object> getVendorNameDetails(String vendors) throws ExecutionException, InterruptedException;
+    //Map<String, Object> getVendorNameDetails() throws ExecutionException, InterruptedException;
+    String saveVendorNamesFromList() throws ExecutionException, InterruptedException;
+    Map<String, Object> getVendorNameDetails() throws ExecutionException, InterruptedException;
+
+    String saveVendorslocation() throws ExecutionException, InterruptedException;
 }

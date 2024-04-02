@@ -1,11 +1,10 @@
 package com.SXN.Vendor.Entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import javax.persistence.Entity;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
@@ -21,10 +20,19 @@ public class VendorIdDetails {
         private String gst_No;
         private String address;
         private String phoneNumber;
-        private String location;
         private String regNo;
         private String vendorName;
         private String onboarding;
+        private int isActive;
+        @ElementCollection
+        @CollectionTable(name = "vendor_location", joinColumns = @JoinColumn(name = "vendor_id"))
+        @MapKeyColumn(name = "location_key")
+        @Column(name = "location_value")
+        private Map<String, Double> location = new HashMap<>();
 
-
+        @PrePersist
+        @PreUpdate
+        private void ensureIsActiveValid() {
+                isActive = (isActive == 0) ? 0 : 1;
+        }
 }

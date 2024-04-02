@@ -24,7 +24,7 @@ public class Category1Controller {
     public ResponseEntity<ApiResponse<String>> saveCategory1(@RequestBody Category1 category1) {
         try {
             String itemId = category1Service.saveCategoryDetails(category1);
-            return ResponseEntity.ok(ResponseUtils.createOkResponse(category1));
+            return ResponseEntity.ok(ResponseUtils.createOkResponse(itemId));
         } catch (ExecutionException | InterruptedException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(ResponseUtils.createErrorResponse("Error saving category: " + e.getMessage()));
@@ -32,7 +32,7 @@ public class Category1Controller {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<ApiResponse<String>> getAllCategories() {
+    public ResponseEntity<ApiResponse<List<Category1>>> getAllCategories() {
         try {
             List<Category1> categories = category1Service.getAllCategories();
             return ResponseEntity.ok(ResponseUtils.createOkResponse(categories));
@@ -41,5 +41,6 @@ public class Category1Controller {
                     .body(ResponseUtils.createErrorResponse("Error fetching categories: " + e.getMessage()));
         }
     }
+
 
 }

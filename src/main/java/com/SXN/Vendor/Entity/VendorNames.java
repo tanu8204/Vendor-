@@ -9,8 +9,9 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 @Entity
 public class VendorNames {
-        private String vendors="Vendors";
         private String vendorId;
         private String vendorName;
+        private String phoneNo ;
+        private String location;
 }
 
