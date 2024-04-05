@@ -1,0 +1,1 @@
+curl localhost:8082/api/VendorList/LogIn/Tanu
