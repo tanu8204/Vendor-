@@ -1,18 +1,19 @@
 package com.SXN.Vendor.Service;
 
-import com.SXN.Vendor.Entity.Category;
+
+import com.google.cloud.Timestamp;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public interface CategoryService {
 
-    String saveCategoryDetails(Category category) throws ExecutionException, InterruptedException;
+    Map<String, Object> saveCategoryDetails(String vendorId,String Category, String subcategory,String description, String itemId,
+                                                   List<String> pictures, int price,
+                                                   Map<String, Integer> size, boolean outOfStock,
+                                                   int lockinPeriod, Timestamp lockinStart)
+            throws ExecutionException, InterruptedException;
 
-    List<Category> getItemDetailsByVendorId(String vendorId, String categoryName) throws ExecutionException, InterruptedException;
-
-    int updateUnits(String vendorId, String categoryName, String itemId, int updatedUnits) throws ExecutionException, InterruptedException;
-
-    boolean updateOutOfStock(String vendorId, String categoryName, String itemId);
-
+    List<Map<String, Map<String, Object>>> getCatalogue(String vendorId) throws ExecutionException, InterruptedException;
 }

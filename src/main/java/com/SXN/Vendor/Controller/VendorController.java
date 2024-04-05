@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
-import static com.SXN.Vendor.ResponseUtils.ResponseUtils.createErrorResponse;
 
 @Slf4j
 @RestController
@@ -25,6 +24,7 @@ public class VendorController {
     @Autowired
     private VendorService vendorService;
 
+    //http://localhost:8085/api/VendorList/registration?vendorId=vendor1&vendorName=ExampleVendor&gst_No=1234567890&address=ExampleAddress&phoneNumber=1234567890&regNo=ABC123&onboarding=2024-04-07&isActive=1&latitude=37.7749&longitude=-122.4194
     @PostMapping("registration")
     public ResponseEntity<ApiResponse<VendorIdDetails>> registerVendor(
             @RequestParam(required = false) String vendorId,
@@ -70,7 +70,7 @@ public class VendorController {
         }
     }
 
-
+    //http://localhost:8085/api/VendorList/LogIn?vendorId=vendor1
     @GetMapping("LogIn")
     public ResponseEntity<ApiResponse<VendorIdDetails>> getVendorDetails(@RequestParam String vendorId) {
         try {

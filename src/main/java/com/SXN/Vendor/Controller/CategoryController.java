@@ -1,20 +1,18 @@
 package com.SXN.Vendor.Controller;
 
-import com.SXN.Vendor.Entity.Category;
 import com.SXN.Vendor.ResponseUtils.ApiResponse;
 import com.SXN.Vendor.ResponseUtils.ResponseUtils;
 import com.SXN.Vendor.Service.CategoryService;
+import com.google.cloud.Timestamp;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -24,54 +22,63 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    //http://localhost:8085/api/VendorList/addCategoryDetails?outOfStock=false&description=demo&price=1234&units=19&pictures=https://firebasestorage.googleapis.com/v0/b/duds-68a6d.appspot.com/o/pic1.jpg?alt=media%26token=452ba8c3-928b-490e-87e6-d567419bbf5f,https://firebasestorage.googleapis.com/v0/b/duds-68a6d.appspot.com/o/pic1.jpg?alt=media%26token=452ba8c3-928b-490e-87e6-d567419bbf5f,https://firebasestorage.googleapis.com/v0/b/duds-68a6d.appspot.com/o/pic1.jpg?alt=media%26token=452ba8c3-928b-490e-87e6-d567419bbf5f&itemId=11&vendorId=vendor&lockinPeriod=15&S=10&L=23&XL=3&XXL=0&M=1&subcategory=Kurtas
+    //http://localhost:8085/api/VendorList/addCategoryDetails?outOfStock=false&description=demo&price=1234&units=19&itemId=33&vendorId=vendor&lockinPeriod=15&S=10&L=23&XL=3&XXL=0&M=1&pictures=https://firebasestorage.googleapis.com/v0/b/duds-68a6d.appspot.com/o/pic1.jpg?alt=media%26token=452ba8c3-928b-490e-87e6-d567419bbf5f,https://firebasestorage.googleapis.com/v0/b/duds-68a6d.appspot.com/o/pic1.jpg?alt=media%26token=452ba8c3-928b-490e-87e6-d567419bbf5f,https://firebasestorage.googleapis.com/v0/b/duds-68a6d.appspot.com/o/pic1.jpg?alt=media%26token=452ba8c3-928b-490e-87e6-d567419bbf5f&subcategory=Shirts&Category=Menswear
     @PostMapping("/addCategoryDetails")
-    public ResponseEntity<ApiResponse<Category>> saveCategory(
+    public ResponseEntity<ApiResponse<Map<String, Object>>> saveCategoryDetails(
             @RequestParam String vendorId,
-            @RequestParam String categoryName,
-            @RequestParam String subCategory,
+            @RequestParam String Category,
+            @RequestParam String subcategory,
             @RequestParam String description,
+            @RequestParam(required = false) String itemId,
             @RequestParam List<String> pictures,
-            @RequestParam Double price,
-            @RequestParam Map<String, Integer> size,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss") LocalDateTime lockin_start,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss") LocalDateTime lockin_end,
-            @RequestParam int units,
-            @RequestParam boolean outOfStock) {
+            @RequestParam int price,
+            @RequestParam boolean outOfStock,
+            @RequestParam int S,
+            @RequestParam int M,
+            @RequestParam int L,
+            @RequestParam int XL,
+            @RequestParam int XXL,
+            @RequestParam int lockinPeriod) {
         try {
-            // Set default values for lockin_start and lockin_end if not provided
-            if (lockin_start == null) {
-                lockin_start = LocalDateTime.now();
-            }
-            if (lockin_end == null) {
-                lockin_end = lockin_start.plusDays(15);
-            }
+            // Convert lockinStart String to Timestamp
+          /*  SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+            Date startDate = dateFormat.parse(lockinStart);
+             com.google.cloud.Timestamp startTimestamp = com.google.cloud.Timestamp.of(startDate);
 
-            // Create Category object
-            Category category = new Category();
-            category.setVendorId(vendorId);
-            category.setCategoryName(categoryName);
-            category.setSubCategory(subCategory);
-            category.setDescription(description);
-            category.setPictures(pictures);
-            category.setPrice(price);
-            category.setSize(size);
-            category.setLockin_start(lockin_start);
-            category.setLockin_end(lockin_end);
-            category.setUnits(units);
-            category.setOutOfStock(outOfStock);
+*/
+            Timestamp currentTimestamp = Timestamp.ofTimeSecondsAndNanos(Instant.now().getEpochSecond(), Instant.now().getNano());
 
-            // Save category details
-            String itemId = categoryService.saveCategoryDetails(category);
+            // Convert Date to com.google.cloud.Timestamp
 
-            // Prepare response
-            ApiResponse<Category> response = ResponseUtils.createOkResponse(category);
-            return ResponseEntity.ok(response);
-        } catch (ExecutionException | InterruptedException e) {
+            Map<String, Integer> size = new HashMap<>();
+            size.put("S", S);
+            size.put("M", M);
+            size.put("L", L);
+            size.put("XL", XL);
+            size.put("XXL", XXL);
+
+            Map<String, Object> savedCategory = categoryService.saveCategoryDetails(vendorId,Category,subcategory,description, itemId, pictures, price, size, outOfStock, lockinPeriod, currentTimestamp);
+            return ResponseEntity.ok(ResponseUtils.createOkResponse(savedCategory));
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(ResponseUtils.createErrorResponse("Error saving category: " + e.getMessage()));
+                    .body(ResponseUtils.createErrorResponse("Failed to add category: " + e.getMessage()));
         }
     }
 
+    //http://localhost:8085/api/VendorList/getcatalogue?vendorId=vendor
+    @GetMapping("/getcatalogue")
+    public ResponseEntity<ApiResponse<List<Map<String, Map<String, Object>>>>> getCatalogue(@RequestParam String vendorId) {
+        try {
+            List<Map<String, Map<String, Object>>> catalogue = categoryService.getCatalogue(vendorId);
+            return ResponseEntity.ok(ResponseUtils.createOkResponse(catalogue));
+        } catch (ExecutionException | InterruptedException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ResponseUtils.createErrorResponse("Failed to fetch catalogue: " + e.getMessage()));
+        }
+    }
+
+/*
     @GetMapping("/getCategoryDetails")
     public ResponseEntity<ApiResponse<List<Category>>> getItemDetails(@RequestParam String vendorId, @RequestParam String categoryName) throws ExecutionException, InterruptedException {
         try {
@@ -117,5 +124,5 @@ public class CategoryController {
             ApiResponse<String> errorResponse = ResponseUtils.createErrorResponse("Error updating outOfStock field of an item: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
-    }
+    }*/
 }

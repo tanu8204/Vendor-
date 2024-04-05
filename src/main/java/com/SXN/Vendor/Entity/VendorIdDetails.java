@@ -24,10 +24,6 @@ public class VendorIdDetails {
         private String vendorName;
         private String onboarding;
         private int isActive;
-        @ElementCollection
-        @CollectionTable(name = "vendor_location", joinColumns = @JoinColumn(name = "vendor_id"))
-        @MapKeyColumn(name = "location_key")
-        @Column(name = "location_value")
         private Map<String, Double> location = new HashMap<>();
 
         @PrePersist
